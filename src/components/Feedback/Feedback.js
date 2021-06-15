@@ -1,20 +1,16 @@
 import React from 'react';
 
 class Feedback extends React.Component {
-  //   state = {
-  //     good: 0,
-  //     neutral: 0,
-  //     bad: 0,
+  static defaultProps = {
+    initialValue: 0,
+  };
 
-  //     this.changesValueGood = this.changesValueGood.bind(this);
-  //   };
-
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      good: 0,
-      neutral: 0,
-      bad: 0,
+      good: this.props.initialValue,
+      neutral: this.props.initialValue,
+      bad: this.props.initialValue,
     };
 
     this.changesValueGood = this.changesValueGood.bind(this);
@@ -34,18 +30,44 @@ class Feedback extends React.Component {
     this.setState(prevState => ({ bad: prevState.bad + 1 }));
   };
 
+  countTotalFeedback = review => () => {
+    this.setState({ [review]: this.state[review] + 1 });
+
+    // const { good, neutral, bad } = this.state;
+
+    // return good + neutral + bad;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const { good, neutral, bad } = this.state;
+
+    return Math.round((good * 100) / (good + neutral + bad)) || 0;
+  };
+
   render() {
+    const { good, neutral, bad } = this.state;
     return (
       <div>
         <p>Please leave feedback</p>
 
-        <button type="button" onClick={this.changesValueGood}>
+        <button
+          type="button"
+          onClick={(this.changesValueGood, this.countTotalFeedback('good'))}
+        >
           Good
         </button>
-        <button type="button" onClick={this.changesValueNeutral}>
+        <button
+          type="button"
+          onClick={
+            (this.changesValueNeutral, this.countTotalFeedback('neutral'))
+          }
+        >
           Neutral
         </button>
-        <button type="button" onClick={this.changesValueBad}>
+        <button
+          type="button"
+          onClick={(this.changesValueBad, this.countTotalFeedback('bad'))}
+        >
           Bad
         </button>
 
@@ -54,7 +76,8 @@ class Feedback extends React.Component {
           <li>Good:{this.state.good}</li>
           <li>Neutral:{this.state.neutral}</li>
           <li>Bad:{this.state.bad}</li>
-          <li>Total:</li>
+          <li>Total:{good + neutral + bad}</li>
+          <li>Positive feedback:{this.countPositiveFeedbackPercentage()}%</li>
         </ul>
       </div>
     );
