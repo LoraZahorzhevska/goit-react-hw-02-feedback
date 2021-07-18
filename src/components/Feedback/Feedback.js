@@ -3,6 +3,7 @@ import React from 'react';
 import { Statistics } from '../Statistics/Statistics';
 import FeedbackOptions from '../FeedbackOptions/FeedbackOptions';
 import Notification from '../Notification/Notification';
+import s from './Feedback.module.css';
 
 class Feedback extends React.Component {
   static defaultProps = {
@@ -38,7 +39,7 @@ class Feedback extends React.Component {
     const objKey = Object.keys(this.state);
     return (
       <div>
-        <p>Please leave feedback</p>
+        <p className={s.text}>Please leave feedback</p>
 
         <FeedbackOptions
           options={objKey}

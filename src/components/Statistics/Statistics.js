@@ -1,5 +1,5 @@
 import React from 'react';
-// import { Component } from 'react';
+import s from './Statistics.module.css';
 import PropTypes from 'prop-types';
 
 export class Statistics extends React.Component {
@@ -8,8 +8,8 @@ export class Statistics extends React.Component {
       this.props;
     return (
       <>
-        <p>Statistics</p>
-        <ul>
+        <p className={s.text}>Statistics</p>
+        <ul className={s.statistics}>
           <li>Good:{countGood}</li>
           <li>Neutral:{countNeutral}</li>
           <li>Bad:{countBad}</li>
